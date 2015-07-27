@@ -1,0 +1,35 @@
+<h1><%= @articles.title %></h1>
+<% unless @articles.user.nil? %>
+<p>
+	Escrito por <%= @articles.user.email %>
+</p>
+<% end %>
+<div class="field">
+	<% @articles.categories.each do |category| %>
+	<%= link_to category.name, category, style:"color:#{category.color};"  %>
+	<%end%>
+</div>
+<div class="field">
+	<%= image_tag @articles.cover.url() %>
+</div>
+<p>
+	Visitas: <%= @articles.visits_count %>
+</p>
+<div>
+	<%= @articles.body %>
+</div>
+
+<div class="field">
+	<h3>Comentarios</h3>
+	<%=	render "comments/form" %>
+	<ul id="comments-box">
+		<% @articles.comments.each do |comment| %>
+		<li>
+			<%= comment.body %> - <%= comment.user.email %>
+		</li>
+		<%end%>
+	</ul>
+</div>
+<div>
+	<%= link_to "Editar", edit_article_path(@articles) %>
+</div>
